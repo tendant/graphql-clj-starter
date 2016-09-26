@@ -13,8 +13,10 @@
                  [graphql-clj "0.1.9-SNAPSHOT"]]
   :main ^:skip-aot graphql-clj-starter.core
   :target-path "target/%s"
+  :resource-paths ["build"]
   :profiles {:uberjar {:aot :all}
              :dev {:ring {:stacktrace-middleware prone.middleware/wrap-exceptions}  ; http://localhost:3000/prone/latest
+                   :resource-paths ["build"]
                    :dependencies [[prone "1.1.1"]]}}
   :plugins [[lein-ring "0.9.7"]]
   :ring {:handler graphql-clj-starter.handler/app

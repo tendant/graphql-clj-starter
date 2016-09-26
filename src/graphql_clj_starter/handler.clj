@@ -24,6 +24,7 @@
            (graphql/execute query (json/parse-string variables))
            (catch Throwable e
              (println e)))))
+  (route/resources "/" {:root ""})
   (route/not-found "<h1>Page not found</h1>"))
 
 (def app
