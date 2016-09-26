@@ -1,4 +1,4 @@
-This project is a Demo project for [graphql-clj](https://github.com/tendant/graphql-clj-starter) and [GraphiQL](https://github.com/graphql/graphiql). You can start trying Clojure with GraphQL in a few minutes.
+This project is a Demo project for [graphql-clj](https://github.com/tendant/graphql-clj) and [GraphiQL](https://github.com/graphql/graphiql). You can start trying Clojure with GraphQL in a few minutes.
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
