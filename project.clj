@@ -15,7 +15,7 @@
   :target-path "target/%s"
   :resource-paths ["build"]
   :profiles {:uberjar {:aot :all}
-             :dev {:ring {:stacktrace-middleware prone.middleware/wrap-exceptions}  ; http://localhost:3000/prone/latest
+             :dev {; :ring {:stacktrace-middleware prone.middleware/wrap-exceptions}  ; http://localhost:3000/prone/latest
                    :resource-paths ["build"]
                    :dependencies [[prone "1.1.1"]]}}
   :plugins [[lein-ring "0.9.7"]]
