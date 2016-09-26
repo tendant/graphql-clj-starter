@@ -6,8 +6,7 @@
             [graphql-clj.introspection :as introspection]
             [clojure.core.match :as match]))
 
-(def starter-schema "
-enum Episode { NEWHOPE, EMPIRE, JEDI }
+(def starter-schema "enum Episode { NEWHOPE, EMPIRE, JEDI }
 
 interface Character {
   id: String!
@@ -16,7 +15,7 @@ interface Character {
   appearsIn: [Episode]
 }
 
-type Human : Character {
+type Human implements Character {
   id: String!
   name: String
   friends: [Character]
@@ -24,7 +23,7 @@ type Human : Character {
   homePlanet: String
 }
 
-type Droid : Character {
+type Droid implements Character {
   id: String!
   name: String
   friends: [Character]
