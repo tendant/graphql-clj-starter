@@ -1,13 +1,13 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-# Prepare environment
+## Prepare environment
 
-## `npm run build`
+### `npm run build`
 
-# Start server
+## Start server
 
-## `lein ring server-headless`
+### `lein ring server-headless`
 
-## Access graphiql from
+### Access graphiql from
 
     http://localhost:3002/index.html
