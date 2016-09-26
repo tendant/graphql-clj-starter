@@ -96,11 +96,11 @@ type Query {
             :primaryFunction "Astromech",
             })
 
-(def droidData {"2002" threepio
+(def droidData {"2000" threepio
                 "2001" artoo})
 
 (defn get-character [id]
-  (or (get humanData id)
+  (or (get humanData id) ; BUG: String should be parsed as string instead of int
       (get droidData id)))
 
 (defn get-friends [character]
@@ -112,10 +112,10 @@ type Query {
     artoo))
 
 (defn get-human [id]
-  (get humanData id))
+  (get humanData (str id))) ; BUG: String should be parsed as string instead of int
 
 (defn get-droid [id]
-  (get droidData id))
+  (get droidData (str id))) ; BUG: String should be parsed as string instead of int
 
 (defn starter-resolver-fn [type-name field-name]
   (match/match
@@ -131,11 +131,11 @@ type Query {
                          (get-droid (str (get args "id")))))
    ;; Hacky!!! Should use resolver for interface
    ["Human" "friends"] (fn [context parent & rest]
-                         (println parent)
                          (get-friends parent))
    ["Droid" "friends"] (fn [context parent & rest]
-                         (println parent)
                          (get-friends parent))
+   ["Character" "friends"] (fn [context parent & rest]
+                             (get-friends parent))
    :else nil))
 
 (def parsed-schema (parser/parse starter-schema))
