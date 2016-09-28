@@ -36,7 +36,15 @@ type Query {
   human(id: String!): Human
   droid(id: String!): Droid
 }
-")
+
+type Mutation {
+  createHuman(name: String, friends: [String]): Human
+}
+  
+schema {
+  query: Query
+  mutation: Mutation
+}")
 
 (def luke {:id "1000",
            :name "Luke Skywalker"
@@ -72,13 +80,12 @@ type Query {
              :appearsIn [ 4 ],
              })
 
-(def humanData  {
-                 "1000" luke
-                 "1001" vader
-                 "1002" han
-                 "1003" leia
-                 "1004" tarkin
-                 })
+(def humanData  (atom {
+                       "1000" luke
+                       "1001" vader
+                       "1002" han
+                       "1003" leia
+                       "1004" tarkin}))
 
 (def threepio {
                :id "2000",
@@ -96,12 +103,18 @@ type Query {
             :primaryFunction "Astromech",
             })
 
-(def droidData {"2000" threepio
-                "2001" artoo})
+(def droidData (atom {"2000" threepio
+                      "2001" artoo}))
+
+(defn get-human [id]
+  (get humanData (str id))) ; BUG: String should be parsed as string instead of int
+
+(defn get-droid [id]
+  (get droidData (str id))) ; BUG: String should be parsed as string instead of int
 
 (defn get-character [id]
-  (or (get humanData id) ; BUG: String should be parsed as string instead of int
-      (get droidData id)))
+  (or (get-human id) ; BUG: String should be parsed as string instead of int
+      (get-droid id)))
 
 (defn get-friends [character]
   (map get-character (:friends character)))
@@ -111,11 +124,15 @@ type Query {
     luke
     artoo))
 
-(defn get-human [id]
-  (get humanData (str id))) ; BUG: String should be parsed as string instead of int
+(def human-id (atom 2050))
 
-(defn get-droid [id]
-  (get droidData (str id))) ; BUG: String should be parsed as string instead of int
+(defn create-human [args]
+  (let [new-human-id (str (swap! human-id inc))
+        new-human {:id new-human-id
+                   :name (get args "name")
+                   :friends (get args "friends")}]
+    (swap! humanData assoc new-human-id new-human)
+    new-human))
 
 (defn starter-resolver-fn [type-name field-name]
   (match/match
@@ -136,6 +153,9 @@ type Query {
                          (get-friends parent))
    ["Character" "friends"] (fn [context parent & rest]
                              (get-friends parent))
+   ["Mutation" "createHuman"] (fn [context parent & rest]
+                                (let [args (first rest)]
+                                  (create-human args)))
    :else nil))
 
 (def parsed-schema (parser/parse starter-schema))

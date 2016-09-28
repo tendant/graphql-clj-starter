@@ -10,7 +10,7 @@
                  [ring/ring-json "0.4.0"]
                  [ring-cors "0.1.8"]
                  [org.clojure/core.match "0.3.0-alpha4"]
-                 [graphql-clj "0.1.11"]]
+                 [graphql-clj "0.1.12"]]
   :main ^:skip-aot graphql-clj-starter.core
   :target-path "target/%s"
   :resource-paths ["build"]
