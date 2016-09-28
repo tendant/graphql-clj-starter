@@ -107,10 +107,10 @@ schema {
                       "2001" artoo}))
 
 (defn get-human [id]
-  (get humanData (str id))) ; BUG: String should be parsed as string instead of int
+  (get @humanData (str id))) ; BUG: String should be parsed as string instead of int
 
 (defn get-droid [id]
-  (get droidData (str id))) ; BUG: String should be parsed as string instead of int
+  (get @droidData (str id))) ; BUG: String should be parsed as string instead of int
 
 (defn get-character [id]
   (or (get-human id) ; BUG: String should be parsed as string instead of int
