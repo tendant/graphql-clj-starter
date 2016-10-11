@@ -6,10 +6,12 @@ import fetch from 'isomorphic-fetch';
 
 class App extends Component {
   graphQLFetcher(graphQLParams) {
-    return fetch(window.location.origin + '/graphql', {
+    var host = window.location.origin;
+    // var host = "http://localhost:3002";
+    return fetch( host + '/graphql', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(graphQLParams),
+      body: JSON.stringify(graphQLParams)
     }).then(response => response.json());
   }
   

@@ -160,10 +160,11 @@ schema {
 
 (def parsed-schema (parser/parse starter-schema))
 
-(def introspection-schema (parser/parse introspection/introspection-schema))
+(def introspection-schema introspection/introspection-schema)
 
 (defn execute
   [query variables]
   (let  [type-schema (type/create-schema parsed-schema introspection-schema)
          context nil]
     (executor/execute context type-schema starter-resolver-fn query variables)))
+
