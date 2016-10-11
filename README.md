@@ -15,3 +15,31 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### Access graphiql from
 
     http://localhost:3002/index.html
+
+#### Sample queries
+
+```
+query {
+  human (id:1002) {
+    id
+    name
+    friends {
+      id
+      name
+      friends {
+        id
+      }
+    }
+  }
+}
+```
+
+#### Sample mutations
+
+```
+mutation{
+  createHuman (name:"testname", friends:[]) {
+    id
+  }
+}
+```
