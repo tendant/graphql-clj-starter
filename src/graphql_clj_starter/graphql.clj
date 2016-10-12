@@ -137,25 +137,21 @@ schema {
 (defn starter-resolver-fn [type-name field-name]
   (match/match
    [type-name field-name]
-   ["Query" "hero"] (fn [context parent & rest]
-                      (let [args (first rest)]
-                        (get-hero (:episode args))))
-   ["Query" "human"] (fn [context parent & rest]
-                       (let [args (first rest)]
-                         (get-human (str (get args "id")))))
-   ["Query" "droid"] (fn [context parent & rest]
-                       (let [args (first rest)]
-                         (get-droid (str (get args "id")))))
+   ["Query" "hero"] (fn [context parent args]
+                      (get-hero (:episode args)))
+   ["Query" "human"] (fn [context parent args]
+                       (get-human (str (get args "id"))))
+   ["Query" "droid"] (fn [context parent args]
+                       (get-droid (str (get args "id"))))
    ;; Hacky!!! Should use resolver for interface
-   ["Human" "friends"] (fn [context parent & rest]
+   ["Human" "friends"] (fn [context parent args]
                          (get-friends parent))
-   ["Droid" "friends"] (fn [context parent & rest]
+   ["Droid" "friends"] (fn [context parent args]
                          (get-friends parent))
-   ["Character" "friends"] (fn [context parent & rest]
+   ["Character" "friends"] (fn [context parent args]
                              (get-friends parent))
-   ["Mutation" "createHuman"] (fn [context parent & rest]
-                                (let [args (first rest)]
-                                  (create-human args)))
+   ["Mutation" "createHuman"] (fn [context parent args]
+                                (create-human args))
    :else nil))
 
 (def parsed-schema (parser/parse starter-schema))
