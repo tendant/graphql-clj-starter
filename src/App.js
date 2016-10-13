@@ -11,6 +11,7 @@ class App extends Component {
     return fetch( host + '/graphql', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
       body: JSON.stringify(graphQLParams)
     }).then(response => response.json());
   }
