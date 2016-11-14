@@ -3,6 +3,7 @@
             [graphql-clj.type :as type]
             [graphql-clj.resolver :as resolver]
             [graphql-clj.executor :as executor]
+            [graphql-clj.validator :as validator]
             [graphql-clj.introspection :as introspection]
             [clojure.core.match :as match]))
 
@@ -35,6 +36,11 @@ type Query {
   hero(episode: Episode): Character
   human(id: String!): Human
   droid(id: String!): Droid
+  test: String
+}
+
+type Good {
+  id: String
 }
 
 type Mutation {
@@ -156,11 +162,11 @@ schema {
 
 (def parsed-schema (parser/parse starter-schema))
 
-(def introspection-schema introspection/introspection-schema)
+;; (def introspection-schema introspection/introspection-schema)
 
 (defn execute
   [query variables]
-  (let  [type-schema (type/create-schema parsed-schema introspection-schema)
+  (let  [type-schema (validator/validate-schema* parsed-schema)
          context nil]
     (executor/execute context type-schema starter-resolver-fn query variables)))
 
