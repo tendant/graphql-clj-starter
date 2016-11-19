@@ -36,11 +36,16 @@ type Query {
   hero(episode: Episode): Character
   human(id: String!): Human
   droid(id: String!): Droid
-  test: String
+  hello(world: WorldInput): String
+  objectList: [Object!]!
 }
 
-type Good {
-  id: String
+type Object {
+  id: String!
+}
+
+input WorldInput {
+  text: String
 }
 
 type Mutation {
@@ -149,6 +154,8 @@ schema {
                        (get-human (str (get args "id"))))
    ["Query" "droid"] (fn [context parent args]
                        (get-droid (str (get args "id"))))
+   ["Query" "objectList"] (fn [context parent args]
+                            (repeat 3 {:id (java.util.UUID/randomUUID)}))
    ;; Hacky!!! Should use resolver for interface
    ["Human" "friends"] (fn [context parent args]
                          (get-friends parent))
@@ -166,7 +173,7 @@ schema {
 
 (defn execute
   [query variables]
-  (let  [type-schema (validator/validate-schema* parsed-schema)
+  (let  [type-schema (validator/validate-schema parsed-schema)
          context nil]
     (executor/execute context type-schema starter-resolver-fn query variables)))
 

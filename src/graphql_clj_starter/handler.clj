@@ -16,7 +16,6 @@
        (response/response
         (graphql/execute query variables)))
   (POST "/graphql" [schema query variables :as request]
-        (println "Post req: " request)
         (println "POST query: " query)
         ;; (println "Post variables: " (json/parse-string variables))
         (response/response
