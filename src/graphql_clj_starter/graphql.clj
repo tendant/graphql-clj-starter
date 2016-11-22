@@ -37,6 +37,7 @@ type Query {
   droid(id: String!): Droid
   hello(world: WorldInput): String
   objectList: [Object!]!
+  nestedInput(nested: NestedInput): String
 }
 
 type Object {
@@ -45,6 +46,10 @@ type Object {
 
 input WorldInput {
   text: String
+}
+
+input NestedInput {
+  value: WorldInput
 }
 
 type Mutation {
@@ -164,6 +169,9 @@ schema {
                              (get-friends parent))
    ["Mutation" "createHuman"] (fn [context parent args]
                                 (create-human args))
+   ["Query" "hello"] (fn [context parent args]
+                       (let [world (get args "world")]
+                         world))
    :else nil))
 
 (def validated-schema (->> starter-schema
