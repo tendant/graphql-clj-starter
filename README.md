@@ -20,7 +20,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ```
 query {
-  human (id:1002) {
+  human (id:"1002") {
     id
     name
     friends {
