@@ -1,10 +1,9 @@
 (ns graphql-clj-starter.graphql
   (:require [graphql-clj.parser :as parser]
-            [graphql-clj.type :as type]
             [graphql-clj.resolver :as resolver]
             [graphql-clj.executor :as executor]
-            [graphql-clj.validator :as validator]
-            [graphql-clj.introspection :as introspection]
+            [graphql-clj.query-validator :as qv]
+            [graphql-clj.schema-validator :as sv]
             [clojure.core.match :as match]))
 
 (def starter-schema "enum Episode { NEWHOPE, EMPIRE, JEDI }
@@ -167,13 +166,16 @@ schema {
                                 (create-human args))
    :else nil))
 
-(def parsed-schema (parser/parse starter-schema))
+(def validated-schema (->> starter-schema
+                           parser/parse-schema
+                           sv/validate-schema))
 
 ;; (def introspection-schema introspection/introspection-schema)
 
 (defn execute
   [query variables]
-  (let  [type-schema (validator/validate-schema parsed-schema)
-         context nil]
-    (executor/execute context type-schema starter-resolver-fn query variables)))
+  (let  [errors (first validated-schema)]
+    (if (seq errors)
+      (throw (ex-info (format "Schema validation errors: %s" errors)))
+      (executor/execute nil validated-schema starter-resolver-fn query variables))))
 
