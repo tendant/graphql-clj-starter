@@ -1,6 +1,5 @@
 (ns graphql-clj-starter.graphql
-  (:require [graphql-clj.parser :as parser]
-            [graphql-clj.resolver :as resolver]
+  (:require [graphql-clj.resolver :as resolver]
             [graphql-clj.executor :as executor]
             [graphql-clj.query-validator :as qv]
             [graphql-clj.schema-validator :as sv]
@@ -174,16 +173,9 @@ schema {
                          world))
    :else nil))
 
-(def validated-schema (->> starter-schema
-                           parser/parse-schema
-                           sv/validate-schema))
-
-;; (def introspection-schema introspection/introspection-schema)
+(def validated-schema (sv/validate-schema starter-schema))
 
 (defn execute
   [query variables]
-  (let  [errors (first validated-schema)]
-    (if (seq errors)
-      (throw (ex-info (format "Schema validation errors: %s" errors)))
-      (executor/execute nil validated-schema starter-resolver-fn query variables))))
+  (executor/execute nil validated-schema starter-resolver-fn query variables))
 
