@@ -1,7 +1,7 @@
 (ns graphql-clj-starter.handler
   (:require [compojure.core :refer [GET POST defroutes]]
             [compojure.route :as route]
-            [ring.util.response :as response]
+            [ring.util.response :as response :refer [redirect]]
             [ring.middleware.json :refer [wrap-json-response]]
             [ring.middleware.json :refer [wrap-json-params]]
             [ring.middleware.cors :refer [wrap-cors]]
@@ -10,7 +10,7 @@
             [graphql-clj-starter.graphql :as graphql]))
 
 (defroutes routes
-  (GET "/" [] "<h1>Hello World</h1>")
+  (GET "/" [] (redirect "index.html"))
   (GET "/graphql" [schema query variables :as request]
        (println "GET query: " query)
        (response/response
