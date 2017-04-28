@@ -40,7 +40,7 @@ mutation{
 
 ### Build Application (HTML & JS)
 
-__Note: Not required, unless you want to make changes to Javascript code__
+_Note: Not required, unless you want to make changes to Javascript code_
 
     npm install
 
