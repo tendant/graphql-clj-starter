@@ -2,12 +2,6 @@ This project is a Demo project for [graphql-clj](https://github.com/tendant/grap
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-### Prepare environment
-
-    npm install
-
-    npm run build
-
 ### Start server
 
     lein ring server-headless
@@ -43,3 +37,12 @@ mutation{
   }
 }
 ```
+
+### Build Application (HTML & JS)
+
+__Note: Not required, unless you want to make changes to Javascript code__
+
+    npm install
+
+    npm run build
+
