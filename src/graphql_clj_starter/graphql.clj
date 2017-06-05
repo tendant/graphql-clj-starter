@@ -5,8 +5,10 @@
             [graphql-clj.schema-validator :as sv]
             [clojure.core.match :as match]))
 
-(def starter-schema "enum Episode { NEWHOPE, EMPIRE, JEDI }
+(def starter-schema "# enum for episode
+  enum Episode { NEWHOPE, EMPIRE, JEDI }
 
+# interface for Chapter 
 interface Character {
   id: String!
   name: String
@@ -14,9 +16,11 @@ interface Character {
   appearsIn: [Episode]
 }
 
+# human implements character
 type Human implements Character {
   id: String!
   name: String
+  # friends of human
   friends: [Character]
   appearsIn: [Episode]
   homePlanet: String
@@ -30,8 +34,10 @@ type Droid implements Character {
   primaryFunction: String
 }
 
+# Root Query
 type Query {
-  hero(episode: Episode): Character
+  # return hero from a particular episode
+  hero(episode: Episode): Character  
   human(id: String!): Human
   droid(id: String!): Droid
   hello(world: WorldInput): String
@@ -52,9 +58,10 @@ input NestedInput {
 }
 
 type Mutation {
+  # create human for given name, it accepts list of friends as variable
   createHuman(name: String, friends: [String]): Human
 }
-  
+
 schema {
   query: Query
   mutation: Mutation
@@ -176,6 +183,6 @@ schema {
 (def validated-schema (sv/validate-schema starter-schema))
 
 (defn execute
-  [query variables]
-  (executor/execute nil validated-schema starter-resolver-fn query variables))
+  [query variables operation-name]
+  (executor/execute nil validated-schema starter-resolver-fn query variables operation-name))
 

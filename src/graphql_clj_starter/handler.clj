@@ -15,12 +15,15 @@
        (println "GET query: " query)
        (response/response
         (graphql/execute query variables)))
-  (POST "/graphql" [schema query variables :as request]
+  (POST "/graphql" [schema query variables operationName :as request]
+        (prn "operationName:" operationName)
         (println "POST query: " query)
         ;; (println "Post variables: " (json/parse-string variables))
         (response/response
          (try
-           (graphql/execute query (json/parse-string variables))
+           (let [result (graphql/execute query (json/parse-string variables) operationName)]
+             (prn "result:" result)
+             result)
            (catch Throwable e
              (println e)))))
   (route/resources "/" {:root ""})
