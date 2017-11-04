@@ -42,7 +42,7 @@ mutation{
 
 _Note: Not required, unless you want to make changes to Javascript code_
 
-    npm install
+    yarn install
 
-    npm run build
+    yarn run build
 
