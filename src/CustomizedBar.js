@@ -3,17 +3,34 @@ import GraphiQL, {ToolbarButton} from 'graphiql';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 
 
-class EndPointModal extends Component {
+class EndpointModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      endpoint: this.props.endpoint
+    };
+    this.handleEndpointIntput = this.handleEndpointIntput.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleEndpointIntput(event) {
+    this.setState({
+      endpoint: event.target.value
+    });
+  }
+
+  handleChange() {
+    this.props.onChange(this.state.endpoint);
+  }
 
   render() {
-    console.log("handleClose:", this.props.handleClose);
     return (
       <ModalContainer onClose={this.props.handleClose}>
         <ModalDialog onClose={this.props.handleClose} dismissOnBackgroundClick={true} >
           <label>New endpoint:
-            <input type="text" name="name" />
+            <input type="text" name="name" value={this.state.endpoint} onChange={this.handleEndpointIntput} />
           </label>
-          <button onClick={null}>Change</button>
+          <button onClick={this.handleChange}>Change</button>
         </ModalDialog>
       </ModalContainer>
     );
@@ -25,29 +42,35 @@ export default class CustommizedBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showEndPointModal: false
+      showEndpointModal: false
     };
-    this.updateEndPoint = this.updateEndPoint.bind(this);
-    this.changeEndPoint = this.changeEndPoint.bind(this);
+    this.updateEndpoint = this.updateEndpoint.bind(this);
+    this.showEndpoint = this.showEndpoint.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
-  updateEndPoint() {
+  handleClose() {
     this.setState({
-      showEndPointModal: false
+      showEndpointModal: false
     });
   }
 
-  changeEndPoint() {
+  updateEndpoint(endpoint) {
+    this.props.onChangeEndpoint(endpoint);
+    this.handleClose();
+  }
+
+  showEndpoint() {
     this.setState({
-      showEndPointModal: true
+      showEndpointModal: true
     });
   }
 
   render() {
     return (
         <GraphiQL.Toolbar>
-          <ToolbarButton title="Change EndPoint" label="Change EndPoint" onClick={this.changeEndPoint} />
-          {this.state.showEndPointModal && <EndPointModal handleClose={this.updateEndPoint} />}
+          <ToolbarButton title="Change Endpoint" label="Change Endpoint" onClick={this.showEndpoint} />
+          {this.state.showEndpointModal && <EndpointModal endpoint={this.props.endpoint} handleClose={this.handleClose} onChange={this.updateEndpoint} />}
         </GraphiQL.Toolbar>
     );
   }

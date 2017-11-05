@@ -8,34 +8,41 @@ import fetch from 'isomorphic-fetch';
 import CustomizedBar from './CustomizedBar';
 
 class App extends Component {
-  graphQLFetcher(graphQLParams) {
-    // var host = window.location.origin;
-    var host = "http://localhost:3002";
-    return fetch( host + '/graphql', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'same-origin',
-      body: JSON.stringify(graphQLParams)
-    }).then(response => response.json());
+
+  constructor(props) {
+    super(props);
+    var endpoint = "http://localhost:3000/graphql";
+    this.state = {
+      endpoint: endpoint,
+      fetcher: this.createFetcher(endpoint)
+    };
+    this.onChangeEndpoint = this.onChangeEndpoint.bind(this);
   }
-  
+
+  onChangeEndpoint(endpoint) {
+    if (endpoint && endpoint != this.state.endpoint) {
+      var fetcher = this.createFetcher(endpoint);
+      this.setState({
+        fetcher: fetcher
+      });
+    }
+  }
+
+  createFetcher(endpoint) {
+    return function(graphQLParams) {
+      return fetch( endpoint, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify(graphQLParams)
+      }).then(response => response.json());
+    };
+  }
+
   render() {
     return (<div>
-        <CustomizedBar />
-        <GraphiQL fetcher={this.graphQLFetcher}>
-          <GraphiQL.Toolbar>
-
-        <ToolbarButton
-          onClick={handlePrettifyQuery}
-          title="Prettify Query (Shift-Ctrl-P)"
-          label="Prettify"
-        />
-        <ToolbarButton
-          onClick={this.handleToggleHistory}
-          title="Show History"
-          label="History"
-/>
-          </GraphiQL.Toolbar>
+        <CustomizedBar endpoint={this.state.endpoint} onChangeEndpoint={this.onChangeEndpoint} />
+        <GraphiQL fetcher={this.state.fetcher}>
         </GraphiQL></div>
     );
   }
