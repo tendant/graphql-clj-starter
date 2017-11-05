@@ -11,7 +11,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    var endpoint = "http://localhost:3000/graphql";
+    var endpoint = "http://localhost:3002/graphql";
     this.state = {
       endpoint: endpoint,
       fetcher: this.createFetcher(endpoint)
