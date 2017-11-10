@@ -10,9 +10,10 @@
     "graphiql": "^0.11.10",
     "graphql": "^0.11.7",
     "isomorphic-fetch": "^2.2.1",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-modal-dialog": "^4.0.7"
+    "react": "^16.1.0",
+    "react-dom": "^16.1.0",
+    "react-modal-dialog": "^4.0.7",
+    "react-portal": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
