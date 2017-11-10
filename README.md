@@ -4,7 +4,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Start server
 
+Start graphql server:
+
     lein ring server-headless
+
+Start html server:
+
+      yarn start
 
 ### Access graphiql from
 
