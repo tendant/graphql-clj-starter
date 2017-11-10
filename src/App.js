@@ -40,11 +40,11 @@ class App extends Component {
   }
 
   render() {
-    return (<div>
-        <CustomizedBar endpoint={this.state.endpoint} onChangeEndpoint={this.onChangeEndpoint} />
-        <GraphiQL fetcher={this.state.fetcher}>
-        </GraphiQL></div>
-    );
+    return [
+        <CustomizedBar endpoint={this.state.endpoint} onChangeEndpoint={this.onChangeEndpoint} />,
+        <GraphiQL fetcher={this.state.fetcher}>,
+        </GraphiQL>,
+    ];
   }
 }
 

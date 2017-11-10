@@ -25,14 +25,14 @@ class EndpointModal extends Component {
 
   render() {
     return (
-      <ModalContainer onClose={this.props.handleClose}>
-        <ModalDialog onClose={this.props.handleClose} dismissOnBackgroundClick={true} >
-          <label>New endpoint:
-            <input type="text" name="name" value={this.state.endpoint} onChange={this.handleEndpointIntput} />
-          </label>
-          <button onClick={this.handleChange}>Change</button>
-        </ModalDialog>
-      </ModalContainer>
+      <Portal style={modalDialog}>
+          <div style={modalDialogDiv}>
+            <label>New endpoint:
+              <input type="text" name="name" value={this.state.endpoint} onChange={this.handleEndpointIntput} />
+            </label>
+            <button onClick={this.handleChange}>Change</button>
+          </div>
+      </Portal>
     );
   }
 }
