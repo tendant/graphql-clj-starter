@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import GraphiQL, {ToolbarButton} from 'graphiql';
-import {ModalContainer, ModalDialog} from 'react-modal-dialog';
+import { Portal } from 'react-portal';
 
 
 class EndpointModal extends Component {
@@ -25,8 +25,8 @@ class EndpointModal extends Component {
 
   render() {
     return (
-      <Portal style={modalDialog}>
-          <div style={modalDialogDiv}>
+      <Portal>
+          <div>
             <label>New endpoint:
               <input type="text" name="name" value={this.state.endpoint} onChange={this.handleEndpointIntput} />
             </label>
