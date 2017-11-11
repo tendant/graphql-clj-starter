@@ -32,7 +32,7 @@
 (def app
   (-> routes
       wrap-json-response
-      (wrap-cors :access-control-allow-origin [#"http://localhost:8080" #"http://.*"]
+      (wrap-cors :access-control-allow-origin [#"http://localhost:8080" #"http[s]?://.*"]
                  :access-control-allow-methods [:get :put :post :delete])
       (wrap-defaults api-defaults)
       (wrap-json-params)))
