@@ -26,7 +26,7 @@ class EndpointModal extends Component {
   render() {
     return (
       <Portal>
-          <div>
+          <div style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}>
             <label>New endpoint:
               <input type="text" name="name" value={this.state.endpoint} onChange={this.handleEndpointIntput} />
             </label>
