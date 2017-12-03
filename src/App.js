@@ -22,7 +22,7 @@ class App extends Component {
   onChangeEndpoint(endpoint) {
     console.log("change endpoint in app:", endpoint);
     if (endpoint && endpoint != this.state.endpoint) {
-      var fetcher = this.createFetcher(endpoint);
+      var fetcher = this.createFetcher(endpoint, this.state.headers);
       this.setState({
         endpoint: endpoint,
         fetcher: fetcher
