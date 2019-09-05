@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "^1.0.7"
+    "react-scripts": "^3.1.1",
+    "rewire": "^4.0.1"
   },
   "dependencies": {
     "es6-promise": "^4.1.0",
-    "graphiql": "^0.11.10",
-    "graphql": "^0.11.7",
+    "graphiql": "^0.14.2",
+    "graphql": "^14.5.4",
     "isomorphic-fetch": "^2.2.1",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
@@ -16,8 +17,20 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "node ./scripts/build-non-split.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
